@@ -2,6 +2,7 @@
 	"name": "elysia-cicd",
 	"version": "1.0.50",
 	"scripts": {
+		"start": "bun run src/index.ts",
 		"dev": "bun run --watch src/index.ts",
 		"lint:format": "bunx biome format src --fix",
 		"lint:check": "bunx biome lint src",
