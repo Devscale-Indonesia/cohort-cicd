@@ -6,8 +6,9 @@ on:
             - main
 
 jobs:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-        - name : Test hello
-          run: echo "Hello"
+        steps:
+            - name : Test hello
+              run: echo "Hello"
