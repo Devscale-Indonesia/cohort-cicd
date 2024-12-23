@@ -1,0 +1,13 @@
+name: CI/CD Pipeline for my app backend
+
+on:
+    push:
+        branches: 
+            - main
+
+jobs:
+    runs-on: ubuntu-latest
+
+    steps:
+        - name : Test hello
+          run: echo "Hello"
