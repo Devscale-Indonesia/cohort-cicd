@@ -1,29 +1,30 @@
-name: CI/CD Pipeline for my app backend
+name: CD Pipeline for app backend
 
 on:
-    push:
-        branches: 
-            - main
+  push:  
+    branches:
+      - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name : Checkout Repo
-              uses: actions/checkout@v2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-            - name: Setup SSH Server
-              uses: webfactory/ssh-agent@v0.5.3
-              with:
-                ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Deploy
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-            - name: Deploy
-              run: |
-                ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
-                    cd apps/backend
-                    git pull
-                    sudo docker compose build
-                    sudo docker compose down
-                    sudo docker compose up -d
-                EOF
+      - name: SSH to server and pull Docker image and run docker-compose up
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
+            cd apps/backend
+            git pull
+            docker compose build
+            docker compose down
+            docker compose up -d
+          EOF
+
